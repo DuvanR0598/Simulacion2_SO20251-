@@ -2,8 +2,7 @@
 
 |Integrante|correo|usuario github|
 |---|---|---|
-|Nombre completo integrante 1|correo integrante 1|gihub user integrante 1|
-|Nombre completo integrante 2|correo integrante 2|gihub user integrante 2|
+|Duvan Ferney Ruiz Ocampo|duvan.ruiz1@udea.edu.co|DuvanR0598|
 
 ## Instrucciones
 
@@ -19,7 +18,44 @@ This program, [mlfq.py](mlfq.py), allows you to see how the MLFQ scheduler prese
 
 1. Run a few randomly-generated problems with just two jobs and two queues; compute the MLFQ execution trace for each. Make your life easier by limiting the length of each job and turning off I/Os.
 
-2. How would you run the scheduler to reproduce each of the examples in the chapter?
+   <details>
+   <summary>Answer</summary>
+      
+   Para resolver el problema, ejecuté el programa mlfq.py con los siguientes parámetros: `python mlfq.py -n 2 -j 2 -m 10 -M 1000 -c`
+
+   **¿Qué significa esto?**
+   - `-n 2`: 2 colas.
+   - `-j 2`: 2 trabajos.
+   - `-m 10`: Cada trabajo tendrá como máximo 10 unidades de tiempo de ejecución (máximo 10 unidades de CPU).
+   - `-M 1000`: Hace que el IO sea extremadamente raro (cada 1000 ticks)
+   - `-c`: Que calcule y muestre el seguimiento de la ejecución.
+  
+   <br>
+  
+   **Seguimiento de Ejecución (Execution Trace):**
+   - *Tiempo 0:* Job 0 comienza a ejecutarse inmediatamente.
+   - *Tiempo 0 a 5:* Job 0 se ejecuta de forma continua.
+   - *Tiempo 5:* Job 0 finaliza.
+   - *Tiempo 5 a 12:* Job 1 comienza y se ejecuta de manera continua hasta finalizar.
+  
+   <br>
+
+   **Analisis**
+   - Ambos trabajos ingresaron al sistema al mismo tiempo.
+   - Job 0 fue seleccionado primero, ya que los trabajos se ejecutan según prioridad y orden de llegada.
+   - Como no hubo E/S, ni cambios de prioridad, los trabajos se ejecutaron de manera sencilla en el orden en que llegaron.
+   - Job 1 tuvo que esperar a que Job 0 terminara para comenzar su ejecución (por eso su tiempo de respuesta es 5).
+  
+   <br>
+
+   <div align="center">
+      <img src="https://github.com/DuvanR0598/Simulacion2_SO20251-/blob/main/Imagenes/Pregunta%201.png?raw=true" alt="Pregunta 1" width="600"/>
+   </div>
+
+   </details>
+   <br>
+
+3. How would you run the scheduler to reproduce each of the examples in the chapter?
    
    <details>
    <summary>Answer</summary>
@@ -27,7 +63,7 @@ This program, [mlfq.py](mlfq.py), allows you to see how the MLFQ scheduler prese
    </details>
    <br>
 
-3. How would you configure the scheduler parameters to behave just like a round-robin scheduler?
+4. How would you configure the scheduler parameters to behave just like a round-robin scheduler?
 
    <details>
    <summary>Answer</summary>
@@ -35,7 +71,7 @@ This program, [mlfq.py](mlfq.py), allows you to see how the MLFQ scheduler prese
    </details>
    <br>
 
-4. Craft a workload with two jobs and scheduler parameters so that one job takes advantage of the older Rules 4a and 4b (turned on
+5. Craft a workload with two jobs and scheduler parameters so that one job takes advantage of the older Rules 4a and 4b (turned on
 with the -S flag) to game the scheduler and obtain 99% of the CPU over a particular time interval.
 
    <details>
@@ -44,7 +80,7 @@ with the -S flag) to game the scheduler and obtain 99% of the CPU over a particu
    </details>
    <br>
 
-5. Given a system with a quantum length of 10 ms in its highest queue, how often would you have to boost jobs back to the highest priority level (with the `-B` flag) in order to guarantee that a single longrunning (and potentially-starving) job gets at least 5% of the CPU?
+6. Given a system with a quantum length of 10 ms in its highest queue, how often would you have to boost jobs back to the highest priority level (with the `-B` flag) in order to guarantee that a single longrunning (and potentially-starving) job gets at least 5% of the CPU?
 
    <details>
    <summary>Answer</summary>
@@ -52,7 +88,7 @@ with the -S flag) to game the scheduler and obtain 99% of the CPU over a particu
    </details>
    <br>
 
-6. One question that arises in scheduling is which end of a queue to add a job that just finished I/O; the -I flag changes this behavior
+7. One question that arises in scheduling is which end of a queue to add a job that just finished I/O; the -I flag changes this behavior
 for this scheduling simulator. Play around with some workloads and see if you can see the effect of this flag.
 
    <details>
