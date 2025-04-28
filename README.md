@@ -89,11 +89,48 @@ This program, [mlfq.py](mlfq.py), allows you to see how the MLFQ scheduler prese
    </details>
    <br>
 
-4. How would you configure the scheduler parameters to behave just like a round-robin scheduler?
+3. How would you configure the scheduler parameters to behave just like a round-robin scheduler?
 
    <details>
    <summary>Answer</summary>
-   Coloque aqui su respuerta
+
+   Para que el MLFQ (mlfq.py) se comporte como un planificador Round-Robin (RR) se debe configurar de manera que:
+
+   **1. Haya solo una cola (un solo nivel de prioridad)**
+   - Usar la opción: `-n 1`
+  
+   <br>
+
+   **2. Definir el quantum (tiempo de CPU antes de cambiar de proceso) como lo que se quiere para el RR.**
+   - Usar la opción: `-q <quantum>` (por ejemplo, `-q 4` para un RR clásico de 4 unidades de tiempo).
+  
+   <br>
+
+   **3. No haya degradación de prioridad ni allotments especiales.**
+   - No se necesita modificar allotments manualmente, ya que con una sola cola, los allotments no afectan.
+
+   <br>
+
+   **4. Sin boost, aunque con 1 sola cola ya no tiene sentido.**
+
+   <br>
+
+   **5. Sin operaciones de E/S, si se quiere un RR simple y limpio.**
+
+   <br>
+
+   **6. Comando de ejemplo para simular Round-Robin**
+   - `python mlfq.py -n 1 -q 4 -l 0,10,0:2,8,0:4,6,0 -c`
+  
+   <br>
+
+   
+   *¿Qué hace esto?*
+   - `-n 1`: Solo una cola → no hay prioridades.
+   - `-q 4`: Cada proceso tiene 4 unidades de CPU antes de ser expulsado (time slice = 4).
+   - `-l 0,10,0:2,8,0:4,6,0`: Defines 3 trabajos manualmente (tú puedes poner los trabajos que quieras).
+   - `-c`: Calcula automáticamente el trace de ejecución.
+  
    </details>
    <br>
 
