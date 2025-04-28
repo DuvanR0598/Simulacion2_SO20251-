@@ -55,11 +55,37 @@ This program, [mlfq.py](mlfq.py), allows you to see how the MLFQ scheduler prese
    </details>
    <br>
 
-3. How would you run the scheduler to reproduce each of the examples in the chapter?
+2. How would you run the scheduler to reproduce each of the examples in the chapter?
    
    <details>
-   <summary>Answer</summary>
-   Coloque aqui su respuerta
+   <summary>Answer</summary>   
+      
+   Para reproducir los ejemplos del capítulo usando el programador `mlfq.py`, se debe:
+
+   <br>
+
+   **1. Identificar las condiciones específicas de cada ejemplo:**
+   - ¿Cuántos trabajos hay?
+   - ¿Cuándo llega cada trabajo (startTime)?
+   - ¿Cuánto CPU necesita cada trabajo (runTime)?
+   - ¿Cada cuánto realiza operaciones de E/S?
+   - ¿Cuántas colas de prioridad existen?
+   - ¿Cuánto tiempo dura el quantum de cada cola?
+   - ¿Hay boost de prioridades? (cada cuánto tiempo)
+   - ¿Qué reglas de allotment (permanencia en nivel) se aplican?
+  
+   <br>
+
+   **2. Traducir esas condiciones en opciones de línea de comandos para `mlfq.py`:**
+   - Usando `-n`, `-q`, `-a`, `-Q`, `-A`, `-l`, `-j`, `-m`, `-M`, `-B`, etc.
+  
+   <br>
+
+   **3. Ejecutar el programa usando esos parámetros.**
+   - Si el ejemplo especifica trabajos exactos, se usa `-l` para definir los trabajos manualmente.
+   - Si hay boost de prioridad, se usa `-B`.
+   - Si hay diferentes tiempos de quantum o allotment por cola, usaré `-Q` y `-A`.
+   
    </details>
    <br>
 
