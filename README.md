@@ -176,11 +176,43 @@ with the -S flag) to game the scheduler and obtain 99% of the CPU over a particu
    </details>
    <br>
 
-6. Given a system with a quantum length of 10 ms in its highest queue, how often would you have to boost jobs back to the highest priority level (with the `-B` flag) in order to guarantee that a single longrunning (and potentially-starving) job gets at least 5% of the CPU?
+5. Given a system with a quantum length of 10 ms in its highest queue, how often would you have to boost jobs back to the highest priority level (with the `-B` flag) in order to guarantee that a single longrunning (and potentially-starving) job gets at least 5% of the CPU?
 
    <details>
    <summary>Answer</summary>
-   Coloque aqui su respuerta
+
+   Durante el intervalo de duración `T`, el trabajo largo solo recibe CPU durante 10 ms (cuando es promovido). Queremos que ese trabajo obtenga al menos el 5 % del tiempo total del CPU.
+
+   $\frac{10}{T} \ge 0.05\to T\le \frac{10}{0.05} = 200ms$
+
+   <br>
+
+   ✅ Para que un trabajo de larga duración reciba al menos el 5 % del CPU, se debe aplicar el (-B) cada 200 ms o menos. Dado lo anterior, se usaria el siguiente comando
+
+   <br>
+
+   `python mlfq.py -n 3 -Q 10,20,30 -A 1,1,1 -B 200 -l 0,100,0:0,100,0 -c`
+
+   <br>
+
+   Esta ejecución refleja exactamente lo que queremos: mostrar cómo el parámetro -B 200 (boost cada 200ms) garantiza que un trabajo de baja prioridad no se quede sin CPU, y pueda recibir al menos el 5 % del tiempo total.
+
+   **En Conclusión:** Para garantizar que un trabajo de larga duración (que ha descendido a una cola de baja prioridad) obtenga al menos el 5 % del tiempo de CPU, debe recibir al menos 5 ms por cada 100 ms de CPU total.
+   Dado que la cola más alta tiene un quantum de 10 ms, y los boosts con `-B`  promueven al trabajo hambriento a esa cola, se puede usar ese quantum para "inyectarle" tiempo de CPU.
+
+   <br>
+
+   El comando ejecutado reproduce el siguiente comportamiento:
+   - 3 colas con quantum: 10 (alta), 20 (media), 30 (baja).
+   - Allotment de 1 por nivel.
+   - Boost cada 200 ms.
+   - Dos trabajos de larga duración, ambos comienzan al mismo tiempo.
+   - Sin E/S.
+  
+   <div align="center">
+      <img src="https://github.com/DuvanR0598/Simulacion2_SO20251-/blob/main/Imagenes/Pregunta%205.png?raw=true" alt="Pregunta 1" width="600"/>
+   </div>
+
    </details>
    <br>
 
