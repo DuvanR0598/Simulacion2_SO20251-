@@ -216,12 +216,32 @@ with the -S flag) to game the scheduler and obtain 99% of the CPU over a particu
    </details>
    <br>
 
-7. One question that arises in scheduling is which end of a queue to add a job that just finished I/O; the -I flag changes this behavior
+6. One question that arises in scheduling is which end of a queue to add a job that just finished I/O; the -I flag changes this behavior
 for this scheduling simulator. Play around with some workloads and see if you can see the effect of this flag.
 
    <details>
    <summary>Answer</summary>
-   Coloque aqui su respuerta
+
+   Usemos dos cargas de trabajo que hagan E/S con frecuencia y ver la diferencia con y sin `-I`.
+   - ✅ Sin -I:
+      - `python mlfq.py -n 2 -Q 5,10 -A 1,1 -l 0,20,3:0,20,5 -c`
+   - ✅ Con -I:
+      - `python mlfq.py -n 2 -Q 5,10 -A 1,1 -I -l 0,20,3:0,20,5 -c`
+    
+   <br>
+   
+   - Con `-I`, los procesos que hacen E/S frecuente pueden tener mejor tiempo de respuesta, porque son retomados inmediatamente.
+   - Sin `-I`, los trabajos deben esperar su turno, lo cual puede aumentar la latencia para trabajos interactivos.
+  
+   <br>
+  
+   **Conclusión al ejecutar el comando con y sin `-I`.**
+   - Al activar -I, los procesos que regresan de una operación de E/S son insertados al frente de la cola.
+   - Esto les permite ser reprogramados inmediatamente, mejorando notablemente:
+      - El tiempo de respuesta (se reanudan rápido).
+      - El turnaround (terminan más pronto).
+   - Esto beneficia especialmente a trabajos interactivos o que hacen E/S frecuente.
+
    </details>
    <br>
 
