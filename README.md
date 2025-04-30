@@ -134,12 +134,45 @@ This program, [mlfq.py](mlfq.py), allows you to see how the MLFQ scheduler prese
    </details>
    <br>
 
-5. Craft a workload with two jobs and scheduler parameters so that one job takes advantage of the older Rules 4a and 4b (turned on
+4. Craft a workload with two jobs and scheduler parameters so that one job takes advantage of the older Rules 4a and 4b (turned on
 with the -S flag) to game the scheduler and obtain 99% of the CPU over a particular time interval.
 
    <details>
    <summary>Answer</summary>
-   Coloque aqui su respuerta
+   
+   **Comando Usado** → `python mlfq.py -n 2 -Q 5,10 -A 1,1 -S -l 0,50,4:0,50,0 -c`
+
+   <br>
+
+   - `-n 2`  2 niveles de cola (alta y baja prioridad)
+   - `Q 5,10`  Quantum de 5 para la cola alta y 10 para la cola baja
+   - `-A 1,1`  Solo 1 allotment por nivel (si se usa el quantum, se baja de nivel)
+   - `-S`  **Clave:** si se hace E/S, se queda en el nivel actual y se reinician allotment y quantum
+   - `-l 0,50,4:0,50,0`  Dos trabajos:
+      - *Job 0:* empieza en `t=0`, requiere 50 unidades de CPU, hace E/S cada 4 unidades
+      - *Job 1:* también en `t=0`, requiere 50 unidades, no hace E/S
+   - `-c`  	Muestra el seguimiento de ejecución (Execution Trace) y estadísticas al final.
+  
+   <br>
+
+   **¿Qué va a pasar?**
+   - Job 0 hace E/S cada 4 unidades → nunca baja de nivel, se mantiene en la cola de mayor prioridad gracias a `-S`.
+   - Job 1 no hace E/S → usa su quantum de 5, agota el allotment, baja al nivel 0, donde se ejecuta menos frecuentemente.
+   - Durante los primeros ~50 ticks, Job 0 acapara casi toda la CPU.
+  
+   <br>
+
+   **Resultado observado**
+   - Job 0 ejecuta repetidamente en la cola de prioridad más alta (PRIORITY 1).
+   - Realiza una operación de E/S cada 4 ticks, y gracias a la opción `-S`, se le reinicia el quantum y allotment sin degradarlo.
+   - Mientras tanto, Job 1 nunca ejecuta durante ese intervalo, porque baja a la cola de menor prioridad y Job 0 ocupa constantemente la CPU.
+  
+   <br>
+
+   <div align="center">
+      <img src="https://github.com/DuvanR0598/Simulacion2_SO20251-/blob/main/Imagenes/Pregunta%204.png?raw=true" alt="Pregunta 1" width="600"/>
+   </div>
+   
    </details>
    <br>
 
