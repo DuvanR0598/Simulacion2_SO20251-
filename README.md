@@ -223,9 +223,9 @@ for this scheduling simulator. Play around with some workloads and see if you ca
    <summary>Answer</summary>
 
    Usemos dos cargas de trabajo que hagan E/S con frecuencia y ver la diferencia con y sin `-I`.
-   - ✅ Sin -I:
+   - ✅ Sin `-I`:
       - `python mlfq.py -n 2 -Q 5,10 -A 1,1 -l 0,20,3:0,20,5 -c`
-   - ✅ Con -I:
+   - ✅ Con `-I`:
       - `python mlfq.py -n 2 -Q 5,10 -A 1,1 -I -l 0,20,3:0,20,5 -c`
     
    <br>
@@ -236,7 +236,7 @@ for this scheduling simulator. Play around with some workloads and see if you ca
    <br>
   
    **Conclusión al ejecutar el comando con y sin `-I`.**
-   - Al activar -I, los procesos que regresan de una operación de E/S son insertados al frente de la cola.
+   - Al activar `-I`, los procesos que regresan de una operación de E/S son insertados al frente de la cola.
    - Esto les permite ser reprogramados inmediatamente, mejorando notablemente:
       - El tiempo de respuesta (se reanudan rápido).
       - El turnaround (terminan más pronto).
